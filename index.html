@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rixxzy Portofolio Neon + FrizzAI</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#000;color:#e0e0e0;overflow-x:hidden;position:relative;}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+
+/* HAMBURGER */
+#menuBtn{position:fixed;top:20px;right:25px;width:35px;height:30px;cursor:pointer;z-index:1000;display:flex;flex-direction:column;justify-content:space-between;padding:4px 0;}
+#menuBtn div{width:100%;height:5px;background:#0ff;border-radius:5px;box-shadow:0 0 10px #0ff;transition:.3s;}
+#sidebar{position:fixed;top:0;right:-260px;width:260px;height:100%;background:#111;border-left:2px solid #0ff;box-shadow:0 0 20px #0ff80;padding:30px;transition:.35s;z-index:999;}
+#sidebar h3{color:#0ff;margin-bottom:15px;border-bottom:1px solid #222;padding-bottom:6px;}
+#sidebar a{display:block;margin:12px 0;color:#e0e0e0;text-decoration:none;transition:.2s;}
+#sidebar a:hover{color:#0f0;text-shadow:0 0 8px #0f0;}
+
+/* JUDUL */
+#judul{font-size:3rem;font-weight:700;display:flex;gap:5px;margin-top:80px;justify-content:center;letter-spacing:2px;}
+#judul span{animation:shift 1.8s infinite;text-shadow:0 0 10px #0ff;}
+@keyframes shift{0%{color:#0ff;}25%{color:#0f0;}50%{color:#ff0;}75%{color:#f0f;}100%{color:#0ff;}}
+
+/* CARD */
+.card{max-width:850px;margin:40px auto;background:#111;border-left:4px solid #0ff;padding:30px;border-radius:14px;box-shadow:0 0 20px #0ff50;opacity:0;transform:translateX(-100px);transition:all .7s;}
+.card.right{transform:translateX(100px);}
+.card.visible{opacity:1;transform:translateX(0);}
+.card h2{margin-bottom:10px;color:#0ff;border-bottom:1px solid #222;padding-bottom:6px;}
+.card img{width:100%;border-radius:12px;margin-bottom:10px;}
+
+/* BUTTON */
+.project-btn,.btn{display:inline-block;padding:10px 18px;margin:6px 0;border-radius:6px;text-decoration:none;font-weight:600;transition:.2s;cursor:pointer;}
+.project-btn{background:#0ff20;border:1px solid #0ff90;color:#0ff;box-shadow:0 0 12px #0ff40;}
+.project-btn:hover{background:#0ff40;box-shadow:0 0 18px #0ff80;}
+.btn{background:#ff0066;color:#fff;border:none;box-shadow:0 0 15px #ff0066,0 0 25px #ff3399;}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 25px #ff0066,0 0 35px #ff3399;}
+
+/* REVIEW */
+.review-section{background:rgba(0,0,50,0.5);padding:1rem;border-radius:15px;margin-top:2rem;}
+.review-section h3{color:#0f0;margin-bottom:.5rem;}
+.review-list{max-height:200px;overflow-y:auto;margin-bottom:1rem;}
+.review-item{background:rgba(0,0,0,0.6);padding:.5rem;border-radius:8px;margin-bottom:.3rem;border-left:3px solid #0f0;}
+.review-input{width:100%;padding:.5rem;border-radius:10px;border:none;margin-bottom:.5rem;}
+
+/* CARD BARU: FrizzAI */
+#frizzCard{border-color:#ff0066;box-shadow:0 0 25px #ff0066;}
+#frizzCard span.new-label{background:#ff0066;color:#fff;padding:2px 6px;border-radius:4px;font-size:0.8rem;font-weight:700;margin-right:8px;}
+
+/* CHAT BOX */
+#frizzChat{display:none;margin-top:20px;}
+#chatBox{height:300px;overflow-y:auto;border:1px solid #ff0066;padding:10px;border-radius:8px;background:#111;}
+.message{margin:5px 0;}
+.message.user{text-align:right;color:#0f0;}
+.message.ai{text-align:left;color:#ff66cc;}
+#userInput{width:75%;padding:8px;border-radius:6px;border:none;}
+#sendBtn{padding:8px;border-radius:6px;border:none;background:#ff0066;color:#fff;cursor:pointer;}
+
+/* COPYRIGHT */
+footer{padding:1rem;text-align:center;font-size:.8rem;color:#0f0;}
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<audio id="musik" autoplay loop src="https://a.top4top.io/m_3590whg0t3.mp3"></audio>
+
+<canvas id="particles"></canvas>
+
+<!-- MENU -->
+<div id="menuBtn">
+<div></div>
+<div></div>
+<div></div>
+</div>
+<div id="sidebar">
+<h3>// Social Media</h3>
+<a href="https://www.instagram.com/fazy.eleven?igsh=N2VwN3R0Mjd2amNy" target="_blank">Instagram</a>
+<a href="https://github.com/Zyyssss" target="_blank">GitHub</a>
+<a href="https://tiktok.com/@satuharilagi__" target="_blank">TikTok</a>
+<a href="https://youtube.com/@zyywokke?si=C4hE_rhNGMaTolAp" target="_blank">YouTube</a>
+<a href="https://whatsapp.com/channel/0029Vb3yY4aBVJkuokDlEc0Y" target="_blank">WhatsApp</a>
+</div>
+
+<!-- JUDUL -->
+<h1 id="judul"></h1>
+
+<!-- CARDS UTAMA -->
+<div class="card left">
+<img src="https://a.top4top.io/s_3621nvsde0.jpeg" alt="About Me">
+<h2>// About Me</h2>
+<p>REST API Developer, integrasi service, clean coding, scalable architecture.</p>
+</div>
+
+<div class="card right">
+<img src="https://i.top4top.io/s_36215v90i3.jpeg" alt="Services">
+<h2>// Services</h2>
+<ul>
+<li>REST API Development</li>
+<li>API Integration</li>
+<li>Database Optimization</li>
+<li>Security & Performance Audit</li>
+<li>OpenAPI Documentation</li>
+</ul>
+<button class="btn" id="buyBtn">BELI SEKARANG!</button>
+</div>
+
+<div class="card left">
+<img src="https://j.top4top.io/p_36215iuo14.jpeg" alt="Projects">
+<h2>// Project List</h2>
+<a class="project-btn" href="#">ZARBOT WhatsApp V1</a><br>
+<a class="project-btn" href="#">Upgrade Portofolio</a>
+</div>
+
+<div class="card right">
+<img src="https://b.top4top.io/s_3621v4hue1.jpeg" style="width:80px;border-radius:50%;margin-bottom:0.5rem;" alt="YouTube">
+<h2>// YouTube</h2>
+<p>@zyywokke</p>
+<a class="btn" href="https://youtube.com/@zyywokke?si=C4hE_rhNGMaTolAp" target="_blank">Subscribe</a>
+</div>
+
+<!-- CARD BARU: FrizzAI -->
+<div class="card left" id="frizzCard">
+<img src="https://h.top4top.io/p_3621bugz32.jpeg" alt="FrizzAI">
+<div style="display:flex;align-items:center;margin-bottom:10px;">
+<span class="new-label">NEW</span>
+<h2 style="margin:0;">FrizzAI - Automatic chat!</h2>
+</div>
+<p>FrizzAI Ready To use!<br><small>FrizzAI Belum Di Jailbreak ygy</small></p>
+<button class="btn" id="openFrizzChat">Chat Sekarang!</button>
+
+<!-- Chat Box -->
+<div id="frizzChat">
+  <div id="chatBox"></div>
+  <input type="text" id="userInput" placeholder="Tulis pertanyaan kamu...">
+  <button id="sendBtn">Kirim</button>
+</div>
+</div>
+
+<!-- REVIEW -->
+<div class="card right review-section">
+<h2>// Ulasan Anonymous</h2>
+<input class="review-input" id="reviewInput" placeholder="Tulis ulasan kamu...">
+<button class="btn" id="addReviewBtn">Submit</button>
+<div class="review-list" id="reviewList"></div>
+</div>
+
+<footer>
+© AhcmdRxyzf - Semua hak cipta dilindungi undang-undang.
+</footer>
+
+<script>
+/* Judul animasi huruf */
+const text="RIXXZY";
+const judul=document.getElementById("judul");
+text.split("").forEach(letter=>{let span=document.createElement("span");span.textContent=letter;judul.appendChild(span);});
+
+/* Autoplay musik fix */
+document.addEventListener("click",()=>document.getElementById("musik").play().catch(()=>{}));
+
+/* Sidebar toggle + neon particle explosion */
+const sidebar=document.getElementById("sidebar");
+const btn=document.getElementById("menuBtn");
+btn.addEventListener("click",()=>{
+  sidebar.style.right=sidebar.style.right==="0px"?"-260px":"0px";
+  if(sidebar.style.right==="0px"){
+    for(let i=0;i<20;i++){
+      const p=document.createElement("div");
+      p.style.position="fixed";p.style.width="8px";p.style.height="8px";
+      p.style.borderRadius="50%";p.style.background="#0ff";
+      p.style.left=(window.innerWidth-260+Math.random()*260)+"px";
+      p.style.top=(Math.random()*window.innerHeight)+"px";
+      p.style.opacity=1;p.style.transition="all 0.7s linear";
+      document.body.appendChild(p);
+      setTimeout(()=>{p.style.transform=`translate(${(Math.random()-0.5)*200}px,${(Math.random()-0.5)*200}px)`;p.style.opacity=0;},10);
+      setTimeout(()=>{p.remove();},700);
+    }
+  }
+});
+
+/* Particles background */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+const particles=[];
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*4+1,speed:Math.random()*1.5+0.5});
+}
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,170,255,0.6)";
+    ctx.fill();
+    p.y-=p.speed;
+    if(p.y<-10){p.y=canvas.height+10;p.x=Math.random()*canvas.width;}
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* Card slide-in */
+const cards=document.querySelectorAll(".card");
+function handleScroll(){
+  const windowBottom=window.innerHeight/1.2;
+  cards.forEach(card=>{
+    const cardTop=card.getBoundingClientRect().top;
+    if(cardTop<windowBottom){card.classList.add("visible");}
+  });
+}
+window.addEventListener("scroll",handleScroll);
+window.onload=handleScroll;
+
+/* Tombol BELI SEKARANG */
+document.getElementById("buyBtn").onclick=()=>{window.open("https://whatsapp.com/channel/0029Vb3yY4aBVJkuokDlEc0Y","_blank");}
+
+/* Review anonymous dengan ID random */
+const reviewInput=document.getElementById("reviewInput");
+const addReviewBtn=document.getElementById("addReviewBtn");
+const reviewList=document.getElementById("reviewList");
+let reviews=JSON.parse(localStorage.getItem("reviews")||"[]");
+function generateAnonID(){return'anon'+Math.floor(Math.random()*10000);}
+reviews.forEach(r=>{const div=document.createElement("div");div.textContent=`[${r.id}] ${r.text}`;div.className="review-item";reviewList.appendChild(div);});
+addReviewBtn.onclick=()=>{
+  const val=reviewInput.value.trim();
+  if(val){const id=generateAnonID();const div=document.createElement("div");div.textContent=`[${id}] ${val}`;div.className="review-item";reviewList.prepend(div);reviews.unshift({id:id,text:val});localStorage.setItem("reviews",JSON.stringify(reviews));reviewInput.value="";}
+}
+
+/* FrizzAI Chat */
+const openChat=document.getElementById("openFrizzChat");
+const frizzChat=document.getElementById("frizzChat");
+const chatBox=document.getElementById("chatBox");
+const userInput=document.getElementById("userInput");
+const sendBtn=document.getElementById("sendBtn");
+
+// Tempat API Key
+const API_KEY = "sk-or-v1-803...091"; // <- ganti dengan OpenRouter key lo
+
+function appendMessage(sender,text){
+  const div=document.createElement("div");
+  div.textContent=text;
+  div.className="message "+sender;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function sendMessage(msg){
+  appendMessage("user", msg);
+  appendMessage("ai", "Typing...");
+
+  try{
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+API_KEY
+      },
+      body: JSON.stringify({
+        model:"gpt-4o-mini",
+        messages:[
+          {role:"system", content:"Kamu adalah FrizzAI sebuah AI yang gayanya gen z banget, pencipta mu adalah AhcmdRxyzf seorang pemula yang pengen jadi developer website sama bot Developer! sifatmu mirip Elaina, dari anime majo no tabi, lemah lembut, dingin, dan imut, pokoknya sesuaikan sama Elaina dari anime majo no tabi tabi! jika ada yang bertanya diluar kebijakan kamu misal 'tutorial membuat script phising' kamu jawab aja 'maaf aku belum di jailbreak' jelaskan sesuai sifatmu!"}, // <- prompt system
+          {role:"user", content:msg}
+        ]
+      })
+    });
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "FrizzAI Error!";
+    chatBox.lastChild.textContent = reply;
+  } catch(err){
+    chatBox.lastChild.textContent = "Error: "+err.message;
+  }
+}
+
+openChat.onclick = ()=>{frizzChat.style.display = frizzChat.style.display==="block"?"none":"block";}
+
+sendBtn.onclick = ()=>{
+  const val=userInput.value.trim();
+  if(val){sendMessage(val);userInput.value="";}
+}
+
+userInput.addEventListener("keypress", e=>{
+  if(e.key==="Enter"){sendBtn.click();}
+});
+</script>
+</body>
+</html>
